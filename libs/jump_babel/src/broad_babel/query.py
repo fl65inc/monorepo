@@ -6,11 +6,21 @@ from functools import cache
 
 import pooch
 
+
+def download_s3(url, output_file, pooch):
+    """Download a file from S3."""
+    import boto3
+
+    bucket = url.replace("s3://", "").split("/")[0]
+    key = "/".join(url.replace("s3://", "").split("/")[1:])
+    s3 = boto3.client("s3")
+    s3.download_file(bucket, key, str(output_file))
+
+
 DB_FILE = pooch.retrieve(
-    # Temporarily  using URL out due to Zenodo API change
-    # https://github.com/zenodo/zenodo/issues/2506
-    url=("https://zenodo.org/records/12211976/files/babel.db"),
+    url="s3://py65/data/cell_painting/babel.db",
     known_hash="md5:4748089ad27a5ff2855627698897f075",
+    downloader=download_s3,
 )
 TABLE = "babel"
 

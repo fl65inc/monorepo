@@ -10,6 +10,8 @@ dependencies = [
     "polars>=1.5.0,<2",
     "adbc-driver-sqlite>=0.8.0,<0.9",
     "pyarrow>=16.1.0",
+    "boto3>=1.33.1",
+    "s3fs>=2024.6.0",
 ]
 
 [project.urls]
